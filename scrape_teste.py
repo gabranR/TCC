@@ -20,10 +20,11 @@ Created on Mon Jan 10 11:54:39 2022
 from bs4 import BeautifulSoup as bs4
 import requests
 import re
+import pandas as pd
 
 # Code -----
 
-## Making soup
+## Making soup 
 trip = 'https://www.tripadvisor.com.br/Attractions-g303536-Activities-a_allAttractions.true-Gramado_State_of_Rio_Grande_do_Sul.html'
 
 trip_dom = 'https://www.tripadvisor.com.br' #to append on stuff
@@ -39,9 +40,11 @@ soup = bs4(html_request, 'lxml')
 
 ## Getting only the interesting tags
 main = soup.find_all('div', class_ = 'fVbwn cdAAV cagLQ eZTON dofsx')
-main = bs4(str(main))
+main = bs4(str(main), 'lxml')
 main = main.find_all('a', href = re.compile(".*\.html$"))
-main = bs4(str(main))
+main = bs4(str(main), 'lxml') 
+
+# it doesn't make sense to re-assign to the same variable
 
 
 
@@ -58,13 +61,11 @@ for place in main.find_all('div', class_ = 'bUshh o csemS'):
 for link in main.find_all('a'):
     links.append(trip_dom + link['href'])
 
+# aparentemente existe um method do pandas que estrutura dados html em df - only works with tables :|
 
 atr_info = dict(zip(places, links))
 
-atr_info
+df_atr_info = pd.Series(atr_info)
 
-
-
-#aaaaaaaa
-
+print(df_atr_info)
 
