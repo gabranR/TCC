@@ -151,7 +151,7 @@ with webdriver.Firefox(options=option) as driver:
         c = []
         d = []
         e = []
-        # That's a ugly method, I know, but it gets the lists out of get_info(), extends them, and click next page
+        # That's an ugly method, I know, but it gets the lists out of get_info(), extends them, and click next page
         for s in range(10):
             info = get_info()
             a.extend(info['Atrativos'])
